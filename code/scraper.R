@@ -46,6 +46,7 @@ sub$is_number <- NULL
 sub$source <- NULL
 names(sub) <- c('CHD_Indicator_Code', 'Date', 'Value')
 sub$Indicator_Name <- 'Ebola Virus Outbreak - Overview of Needs and Requirements (inter-agency plan for Guinea, Liberia, Sierra Leone, Region) (Coverage)'
+sub <- sub[sort(sub$Date, decreasing = T), ]
 
 
 ## Writing output

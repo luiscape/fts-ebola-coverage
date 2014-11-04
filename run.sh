@@ -1,1 +1,1 @@
-~/R/R-3.1.1/bin/RScript tool/code/scraper.R
+~/R/R-3.1.1/bin/Rscript tool/code/scraper.R
