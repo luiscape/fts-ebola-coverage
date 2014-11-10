@@ -22,7 +22,7 @@ def checkID(id, key):
 	h = {'Authorization': key}
 	doc = requests.get(url, headers=h)
 	data = doc.json()
-	new_id = data["result"]["resources"][1]["id"]
+	new_id = data["result"]["resources"][0]["id"]
 
 	if new_id != id:
 		print "ID Check: FAIL"
@@ -52,9 +52,9 @@ def checkFileName(id, key):
 	h = {'Authorization': key}
 	doc = requests.get(url, headers=h)
 	data = doc.json()
-	file_name = data["result"]["resources"][1]["name"]
+	file_name = data["result"]["resources"][0]["name"]
 
-	if file_name == 'ebola-data-db-format.csv':
+	if file_name == 'fts-ebola-coverage.csv':
 		print "File Name Check: PASS"
 
 	else:
@@ -119,7 +119,7 @@ def checkValue(api_key):
 	def read():
 		# reading file
 		df = pd.read_csv('tool/data/data.csv')
-		file_value = df["value"][5]
+		file_value = df["Value"][5]
 		return file_value
 
 	def test(key):
@@ -133,7 +133,7 @@ def checkValue(api_key):
 		h = {'Authorization': key}
 		doc = requests.get(ds_query, headers=h)
 		data = doc.json()
-		ds_value = data["result"]["records"][5]["value"]
+		ds_value = data["result"]["records"][5]["Value"]
 
 		if file_value == ds_value:
 			print "Same Value: PASS"
@@ -166,7 +166,7 @@ def runAllTests():
 	except Exception as e:
 		print e
 		scraperwiki.status('error', 'Tests failed')
-		os.system("mail -s 'Ebola toplines: tests failed.' luiscape@gmail.com")
+		os.system("mail -s 'DataStore FTS Coverage: tests failed.' luiscape@gmail.com")
 
 
 runAllTests()
