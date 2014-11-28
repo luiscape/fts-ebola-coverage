@@ -23,7 +23,6 @@ def downloadResource(filename):
 
     # querying
     url = 'https://data.hdx.rwlabs.org/api/action/resource_show?id=' + resource_id
-    print url
     r = requests.get(url)
     doc = r.json()
     fileUrl = doc["result"]["url"]
@@ -62,11 +61,13 @@ def checkHash(filename, first_run):
 
 def updateDatastore(filename):
 
-    # Checkinf if there is new data
-    update_data = checkHash(filename, first_run = True)
+    # Checking if there is new data
+    update_data = checkHash(filename, first_run = False)
     if (update_data == False):
         print "DataStore Status: No new data. Not updating datastore."
         return
+
+    print "DataStore Status: New data. Updating datastore."
 
     # defining the schema
     resources = [
