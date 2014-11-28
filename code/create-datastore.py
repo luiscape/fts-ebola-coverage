@@ -1,3 +1,6 @@
+# Simple script that manages the creation of
+# datastores in CKAN / HDX.
+
 import os
 import csv
 import json
@@ -6,6 +9,7 @@ import ckanapi
 import urllib
 import requests
 import sys
+import hashlib
 
 remote = 'http://data.hdx.rwlabs.org'
 APIKey = 'XXXXX'
@@ -14,6 +18,7 @@ resource_id = sys.argv[1]
 # ckan will be an instance of ckan api wrapper
 ckan = None
 
+# Function to download a resource from CKAN.
 def downloadResource(filename):
 
     # querying
@@ -29,7 +34,38 @@ def downloadResource(filename):
     except:
         print 'There was an error downlaoding the file.'
 
+# Function that checks for old SHA hash
+# and stores as a SW variable the new hash
+# if they differ. If this function returns true,
+# then the datastore is created.
+def checkHash(filename, first_run):
+    hasher = hashlib.sha1()
+    with open(filename, 'rb') as afile:
+        buf = afile.read()
+        hasher.update(buf)
+        new_hash = hasher.hexdigest()
+
+    # checking if the files are identical or if
+    # they have changed
+    if first_run:
+        scraperwiki.save_var('hash', new_hash)
+        new_data = False
+
+    else:
+        old_hash = scraperwiki.get_var('hash')
+
+        new_data = old_hash == new_hash
+
+    # returning a boolean
+    return new_data
+
+
 def updateDatastore(filename):
+
+    # Checkinf if there is new data
+    if (checkHash(filename, first_run = True) == False):
+        print "No new data. Stopping."
+        break
 
     # defining the schema
     resources = [
