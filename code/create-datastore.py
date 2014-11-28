@@ -65,7 +65,7 @@ def updateDatastore(filename):
     # Checkinf if there is new data
     if (checkHash(filename, first_run = True) == False):
         print "No new data. Stopping."
-        break
+        return
 
     # defining the schema
     resources = [
