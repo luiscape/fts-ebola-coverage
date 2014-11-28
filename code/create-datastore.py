@@ -11,9 +11,10 @@ import requests
 import sys
 import hashlib
 
+# Collecting configuration variables
 remote = 'http://data.hdx.rwlabs.org'
-APIKey = 'XXXXX'
 resource_id = sys.argv[1]
+apikey = sys.argv[2]
 
 # ckan will be an instance of ckan api wrapper
 ckan = None
@@ -114,20 +115,17 @@ def updateDatastore(filename):
             offset += chunksize
             print('Done: %s' % offset)
 
-
-    import sys
     if __name__ == '__main__':
         if len(sys.argv) <= 2:
-            usage = '''python scripts/upload.py {ckan-instance} {api-key}
+            usage = '''python scripts/upload.py {resource-id} {api-key}
 
-    e.g.
+            e.g.
 
-    python scripts/upload.py http://datahub.io/ MY-API-KEY
-    '''
+            python scripts/upload.py http://datahub.io/ RESOURCE_ID API_KEY
+            '''
             print(usage)
             sys.exit(1)
 
-        apikey = sys.argv[2]
         ckan = ckanapi.RemoteCKAN(remote, apikey=apikey)
 
         resource = resources[0]
