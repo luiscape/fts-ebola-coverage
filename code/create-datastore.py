@@ -53,7 +53,7 @@ def checkHash(filename, first_run):
 
     else:
         old_hash = scraperwiki.get_var('hash')
-
+        scraperwiki.save_var('hash', new_hash)
         new_data = old_hash == new_hash
 
     # returning a boolean
