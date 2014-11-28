@@ -65,7 +65,7 @@ def updateDatastore(filename):
     # Checkinf if there is new data
     update_data = checkHash(filename, first_run = True)
     if (update_data == False):
-        print "No new data. Stopping."
+        print "DataStore Status: No new data. Not updating datastore."
         return
 
     # defining the schema
@@ -142,7 +142,7 @@ def runEverything():
 try:
     runEverything()
     # if everything ok
-    print "Everything seems to be just fine."
+    print "SW Status: Everything seems to be just fine."
     scraperwiki.status('ok')
 
 except Exception as e:
